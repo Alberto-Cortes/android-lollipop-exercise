@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.codepath.android.lollipopexercise.R;
+import com.codepath.android.lollipopexercise.activities.ContactsActivity;
 import com.codepath.android.lollipopexercise.activities.DetailsActivity;
 import com.codepath.android.lollipopexercise.models.Contact;
 
@@ -109,7 +112,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                         // Fire an intent when a contact is selected
                         Intent i = new Intent(context, DetailsActivity.class);
                         i.putExtra(EXTRA_CONTACT, contact);
-                        context.startActivity(i);
+                        Pair<View, String > p1 = Pair.create( (View) ivProfile, "profileImage");
+                        Pair<View, String > p2 = Pair.create( (View) tvName, "profileName");
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, p1, p2);
+                        context.startActivity(i, options.toBundle());
 
                         // Pass contact object in the bundle and populate details activity.
                     }

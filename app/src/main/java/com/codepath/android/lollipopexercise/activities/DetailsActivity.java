@@ -65,13 +65,18 @@ public class DetailsActivity extends AppCompatActivity {
                 .load(mContact.getThumbnailDrawable())
                 .centerCrop()
                 .into(target);
-        
+
         tvName.setText(mContact.getName());
         tvPhone.setText(mContact.getNumber());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finishAfterTransition();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
