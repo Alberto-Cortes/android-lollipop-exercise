@@ -110,12 +110,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                     final Contact contact = (Contact)v.getTag();
                     if (contact != null) {
                         // Fire an intent when a contact is selected
-                        Intent i = new Intent(context, DetailsActivity.class);
+                        Intent i = new Intent(mContext, DetailsActivity.class);
                         i.putExtra(EXTRA_CONTACT, contact);
                         Pair<View, String > p1 = Pair.create( (View) ivProfile, "profileImage");
                         Pair<View, String > p2 = Pair.create( (View) tvName, "profileName");
-                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, p1, p2);
-                        context.startActivity(i, options.toBundle());
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, p1, p2);
+                        mContext.startActivity(i, options.toBundle());
 
                         // Pass contact object in the bundle and populate details activity.
                     }
