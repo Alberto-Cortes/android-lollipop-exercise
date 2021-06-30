@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.codepath.android.lollipopexercise.R;
 import com.codepath.android.lollipopexercise.adapters.ContactsAdapter;
 import com.codepath.android.lollipopexercise.models.Contact;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -61,6 +62,14 @@ public class ContactsActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if (id == R.id.btnAdd){
+            Contact randomContact = Contact.getRandomContact(this);
+            contacts.add(0, randomContact);
+            mAdapter.notifyItemInserted(0);
+            rvContacts.smoothScrollToPosition(0);
+            
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
