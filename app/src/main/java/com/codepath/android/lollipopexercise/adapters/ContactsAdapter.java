@@ -3,6 +3,8 @@ package com.codepath.android.lollipopexercise.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.codepath.android.lollipopexercise.R;
 import com.codepath.android.lollipopexercise.activities.DetailsActivity;
 import com.codepath.android.lollipopexercise.models.Contact;
@@ -43,11 +50,35 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
 
     // Display data at the specified position
     @Override
-    public void onBindViewHolder(VH holder, int position) {
-        Contact contact = mContacts.get(position);
+    public void onBindViewHolder(final VH holder, int position) {
+        final Contact contact = mContacts.get(position);
         holder.rootView.setTag(contact);
         holder.tvName.setText(contact.getName());
-        Glide.with(mContext).load(contact.getThumbnailDrawable()).centerCrop().into(holder.ivProfile);
+
+        CustomTarget<Bitmap> target = new CustomTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                Glide.with(mContext)
+                        .load(contact.getThumbnailDrawable())
+                        .centerCrop()
+                        .into(holder.ivProfile);
+
+                Palette palette = Palette.from(resource).generate();
+                Palette.Swatch vibrant = palette.getVibrantSwatch();
+                holder.vPalette.setBackgroundColor(vibrant.getRgb());
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        };
+
+        Glide.with(mContext)
+                .asBitmap()
+                .load(contact.getThumbnailDrawable())
+                .centerCrop()
+                .into(target);
     }
 
     @Override
