@@ -31,7 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
         vPalette = findViewById(R.id.vPalette);
 
         // Extract contact from bundle
-        mContact = (Contact)getIntent().getExtras().getSerializable(EXTRA_CONTACT);
+        mContact = (Contact)getIntent().getSerializableExtra(EXTRA_CONTACT);
 
         // Fill views with data
         Glide.with(DetailsActivity.this).load(mContact.getThumbnailDrawable()).centerCrop().into(ivProfile);
